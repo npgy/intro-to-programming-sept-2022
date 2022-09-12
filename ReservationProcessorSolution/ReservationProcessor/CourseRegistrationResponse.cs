@@ -1,0 +1,1 @@
+﻿public record CourseRegistrationResponse(string Id, DateTime courseDate, bool IsRegistered);
