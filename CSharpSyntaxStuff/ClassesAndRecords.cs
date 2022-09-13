@@ -6,7 +6,7 @@ public class ClassesAndRecords
     public void DoThings()
     {
         var myName = "Nick";
-        Assert.Equal(myName.ToUpper(), "NICK");
+        Assert.Equal("NICK", myName.ToUpper());
     }
 
     [Fact]
