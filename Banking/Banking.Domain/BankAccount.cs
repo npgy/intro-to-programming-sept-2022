@@ -20,5 +20,9 @@ public class BankAccount
         {
             _balance -= amountToWithdraw;
         }
+        else
+        {
+            throw new OverdraftException();
+        }
     }
 }
