@@ -9,6 +9,8 @@ public class StringCalculator
         string readDelimOpts = "";
         int numStart = 0;
         int sum = 0;
+        int currNum = 0;
+        List<int> negatives = new List<int>();
         try
         {
             readDelimOpts = numbers[..3];
@@ -30,8 +32,17 @@ public class StringCalculator
         {
             if (!number.Equals(""))
             {
-                sum += int.Parse(number);
-            } 
+                currNum = int.Parse(number);
+                if (currNum < 0)
+                {
+                    negatives.Add(currNum);
+                    ArgumentOutOfRangeException ex = new ArgumentOutOfRangeException();
+                    ex.Data.Add("UserMessage", "You can't pass negative numbers!");
+                    ex.Data.Add("UserMessage", );
+                    throw new ArgumentOutOfRangeException();
+                }
+                sum += currNum;
+            }
         }
         return sum;
     }
@@ -58,4 +69,6 @@ public class StringCalculator
 
         return Delimeters;
     }
+
+
 }
