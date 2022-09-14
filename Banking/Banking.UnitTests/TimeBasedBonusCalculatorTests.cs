@@ -1,7 +1,4 @@
-﻿using Banking.Domain;
-using Moq;
-
-namespace Banking.UnitTests;
+﻿namespace Banking.UnitTests;
 public class TimeBasedBonusCalculatorTests
 {
 
