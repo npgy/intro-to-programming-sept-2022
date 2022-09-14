@@ -10,7 +10,7 @@ public class BusinessClock : IProvideTheBusinessClock
 
     public bool DuringBusinessHours()
     {
-        return _clock.GetCurrent().Hour >= 9 && _clock.GetCurrent().Hour >= 17;
+        return _clock.GetCurrent().Hour >= 9 && _clock.GetCurrent().Hour <= 17;
     }
 }
 
