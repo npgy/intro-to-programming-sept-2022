@@ -28,14 +28,4 @@ public class TimeBasedBonusCalculatorTests
 
         Assert.Equal(0, bonus);
     }
-
-    [Fact]
-    public void AccountsThatDontMeetCriteriaDoNotGetBonus()
-    {
-        ICalculateAccountBonuses calculator = new TimeBasedBonusCalculator();
-
-        var bonus = calculator.GetBonusForDepositOnAccount(4999.99M, 100);
-
-        Assert.Equal(0, bonus);
-    }
 }
