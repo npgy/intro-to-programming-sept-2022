@@ -28,3 +28,4 @@ public record AccountTransactionResponse
     public decimal Amount { get; set; }
     public string Type { get; set; } = string.Empty;
 }
+

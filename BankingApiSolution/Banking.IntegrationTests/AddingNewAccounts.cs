@@ -1,6 +1,8 @@
 ﻿using apiModels = Banking.Api.Models;
 using System.Text.RegularExpressions;
-
+using Microsoft.Extensions.DependencyInjection;
+using Banking.Api.Domain;
+using Banking.Api.Adapters;
 
 namespace Banking.IntegrationTests;
 public class AddingNewAccounts
@@ -9,8 +11,20 @@ public class AddingNewAccounts
     public async Task AddingANewAccount()
     {
         var newAccount = new apiModels.AccountCreateRequest { Name = "Sue Jones" };
+        var stubbedDate = new DateTime(1969, 4, 20, 23, 59, 00);
+        await using var host = await AlbaHost.For<global::Program>(config =>
+        {
+            config.ConfigureServices(sp =>
+            {
+                var stubbedApi = new Mock<IBonusCalculatorApiAdapter>();
+                stubbedApi.Setup(b => b.GetBonusForDepositAsync(It.IsAny<BonusCalculationRequest>())).ReturnsAsync(new BonusCalculationResponse { Amount = 42.23M });
+                sp.AddSingleton<IBonusCalculatorApiAdapter>(stubbedApi.Object);
 
-        await using var host = await AlbaHost.For<global::Program>(config => { });
+                var stubbedClock = new Mock<ISystemTime>();
+                stubbedClock.Setup(c => c.GetCurrent()).Returns(stubbedDate);
+                sp.AddTransient<ISystemTime>(s => stubbedClock.Object);
+            });
+        });
 
         var result = await host.Scenario(api =>
         {
@@ -49,6 +63,7 @@ public class AddingNewAccounts
         });
 
         var transactionResult = depositResponse.ReadAsJson<apiModels.AccountTransactionResponse>();
-        Assert.Equal(DateTime.Now, transactionResult?.PostedAt);
+        Assert.Equal(stubbedDate, transactionResult?.PostedAt);
+        Assert.Equal(100M + 42.23M, transactionResult?.Amount);
     }
 }
