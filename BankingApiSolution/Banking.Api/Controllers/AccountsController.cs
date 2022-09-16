@@ -25,7 +25,7 @@ public class AccountsController : ControllerBase
     [HttpGet("/accounts/{id}", Name = "get-account-by-id")]
     public async Task<ActionResult> GetAccountById(string id)
     {
-        AccountSummaryResponse response = await _accountManager.GetAccountByIdAsync(id);
+        AccountSummaryResponse? response = await _accountManager.GetAccountByIdAsync(id);
 
         if(response is null)
         {

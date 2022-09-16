@@ -46,7 +46,8 @@ public class AccountManager
         var accountEntity = new AccountEntity
         {
             Id = Guid.NewGuid().ToString(),
-            Name = request.Name
+            Name = request.Name,
+            Balance = 5000M
         };
 
         await _adapter.Accounts.InsertOneAsync(accountEntity);
