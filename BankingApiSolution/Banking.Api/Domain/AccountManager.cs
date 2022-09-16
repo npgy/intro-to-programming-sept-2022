@@ -59,4 +59,44 @@ public class AccountManager
         };
         return response;
     }
+
+    public async Task<AccountBalanceResponse?> GetBalanceForAccountAsync(string accountNumber)
+    {
+        var filter = Builders<AccountEntity>.Filter.Where(a => a.Id == accountNumber);
+        var balanceProjection = Builders<AccountEntity>.Projection.
+            Expression(a => new AccountBalanceResponse { Balance= a.Balance });
+
+        return await _adapter.Accounts.Find(filter).Project(balanceProjection).SingleOrDefaultAsync();
+    }
+
+    public async Task<AccountTransactionResponse?> DepositAsync(string accountNumber, AccountTransactionRequest deposit)
+    {
+        var transaction = new Transaction
+        {
+            TransactionId = Guid.NewGuid().ToString(),
+            Amount = deposit.Amount,
+            PostedAt = DateTime.Now,
+            Type = "DEPOSIT"
+        };
+
+        var filter = Builders<AccountEntity>.Filter.Where(a => a.Id == accountNumber);
+        var update = Builders<AccountEntity>.Update.Push(a => a.Transactions, transaction);
+
+        var entity = await _adapter.Accounts.FindOneAndUpdateAsync(filter, update);
+        if (entity is null)
+        {
+            return null;
+        }
+        var newBalance = entity.Balance + deposit.Amount;
+        var updateBalance = Builders<AccountEntity>.Update.Set(a => a.Balance, newBalance);
+
+        await _adapter.Accounts.FindOneAndUpdateAsync(filter, updateBalance);
+        return new AccountTransactionResponse
+        {
+            TransactionId = transaction.TransactionId,
+            Amount = transaction.Amount,
+            PostedAt = transaction.PostedAt,
+            Type = transaction.Type
+        };
+    }
 }

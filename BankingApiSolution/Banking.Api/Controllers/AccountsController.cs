@@ -52,4 +52,27 @@ public class AccountsController : ControllerBase
 
         return CreatedAtRoute("get-account-by-id", new { id = response.Id }, response);
     }
+
+    [HttpGet("/accounts/{accountNumber}/balance")]
+    public async Task<ActionResult> GetAccountBalance(string accountNumber)
+    {
+        //var balance = new AccountBalanceResponse { Balance = 42 };
+        AccountBalanceResponse? balance = await _accountManager.GetBalanceForAccountAsync(accountNumber);
+        if(balance is null)
+        {
+            return NotFound();
+        }
+        return Ok(balance);
+    }
+
+    [HttpPost("/accounts/{accountNumber}/deposits")]
+    public async Task<ActionResult> AddDeposit([FromBody] AccountTransactionRequest deposit, string accountNumber)
+    {
+        AccountTransactionResponse? response = await _accountManager.DepositAsync(accountNumber, deposit);
+        if (response is null)
+        {
+            return NotFound();
+        }
+        return StatusCode(201, response);
+    }
 }
