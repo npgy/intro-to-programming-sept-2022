@@ -6,3 +6,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: TokyoJoe138!
+  bonus-calculator:
+    image: npgy/bonus-calculator-api:v0.1
+    ports:
+    - 9002:80
