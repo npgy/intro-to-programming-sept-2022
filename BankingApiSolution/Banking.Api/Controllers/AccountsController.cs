@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Banking.Api.Controllers;
 
+[Produces("application/json")]
 public class AccountsController : ControllerBase
 {
     private readonly AccountManager _accountManager;
@@ -15,7 +16,7 @@ public class AccountsController : ControllerBase
 
     // GET /accounts
     [HttpGet("/accounts")]
-    public async Task<ActionResult> GetAllAccounts()
+    public async Task<ActionResult<CollectionResponse<AccountSummaryResponse>>> GetAllAccounts()
     {
         CollectionResponse<AccountSummaryResponse> response = await _accountManager.GetAllAccountsAsync();
         return Ok(response); // return a 200 Ok status code.
@@ -23,7 +24,7 @@ public class AccountsController : ControllerBase
 
     // GET /accounts/{id}
     [HttpGet("/accounts/{id}", Name = "get-account-by-id")]
-    public async Task<ActionResult> GetAccountById(string id)
+    public async Task<ActionResult<AccountSummaryResponse>> GetAccountById(string id)
     {
         AccountSummaryResponse? response = await _accountManager.GetAccountByIdAsync(id);
 
@@ -38,7 +39,8 @@ public class AccountsController : ControllerBase
     }
 
     [HttpPost("/accounts")]
-    public async Task<ActionResult> AddAnAccount([FromBody] AccountCreateRequest request)
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<AccountSummaryResponse>> AddAnAccount([FromBody] AccountCreateRequest request)
     {
         // validate it.
         // if bad, return 400
@@ -54,7 +56,7 @@ public class AccountsController : ControllerBase
     }
 
     [HttpGet("/accounts/{accountNumber}/balance")]
-    public async Task<ActionResult> GetAccountBalance(string accountNumber)
+    public async Task<ActionResult<AccountBalanceResponse>> GetAccountBalance(string accountNumber)
     {
         //var balance = new AccountBalanceResponse { Balance = 42 };
         AccountBalanceResponse? balance = await _accountManager.GetBalanceForAccountAsync(accountNumber);
@@ -66,7 +68,7 @@ public class AccountsController : ControllerBase
     }
 
     [HttpPost("/accounts/{accountNumber}/deposits")]
-    public async Task<ActionResult> AddDeposit([FromBody] AccountTransactionRequest deposit, string accountNumber)
+    public async Task<ActionResult<AccountTransactionResponse>> AddDeposit([FromBody] AccountTransactionRequest deposit, string accountNumber)
     {
         AccountTransactionResponse? response = await _accountManager.DepositAsync(accountNumber, deposit);
         if (response is null)
