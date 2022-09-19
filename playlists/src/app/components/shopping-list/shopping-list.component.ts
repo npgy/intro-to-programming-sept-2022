@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  selector: 'app-shopping-list',
+  templateUrl: './shopping-list.component.html',
+  styleUrls: ['./shopping-list.component.css'],
 })
-export class AppComponent {
-  title = 'Super Playlist App 3000';
+export class ShoppingListComponent {
   shoppingList: ShoppingItem[] = [
     {
       description: 'Beer',

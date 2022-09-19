@@ -1,19 +1,8 @@
-<h1>Hello, world!</h1>
-<h2>This application is called {{title}}</h2>
-<p>The sum of 2 and 2 is {{ 2 + 2 }}</p>
-
-<ul>
-  <li *ngFor="let item of shoppingList">
-    <span [ngClass]="{ bought: item.purchased }">{{ item.description }}</span>
-    <button
-    (click)="markPurchased(item)"
-    *ngIf="item.purchased === false">X</button>
-  </li>
-
-  <div>
-    <input type="text" #newItem>
-    <button (click)="addItem(newItem)">Add Item</button>
-  </div>
-</ul>
-
-<button [disabled]="noPurchasedItems" (click)="removePurchased()">Remove Purchased Items</button>
+<header class="container-fluid">
+  <h1>{{ title }}</h1>
+  <p class="subheading">For Intro to Services!</p>
+</header>
+<main class="container">
+  <app-navigation></app-navigation>
+  <router-outlet></router-outlet>
+</main>
