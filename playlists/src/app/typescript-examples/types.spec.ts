@@ -147,4 +147,33 @@ describe('Functions', () => {
       });
     });
   });
+  describe('destructuring stuff', () => {
+    it('allows you to destructure arrays', () => {
+      const friends = ['Sean', 'Lee', 'Jamie', 'Henry', 'Violet'];
+
+      // const friend0 = friends[0];
+      // const friend2 = friends[2];
+      const [friend0, , friend2, ...rest] = friends;
+
+      expect(friend0).toBe('Sean');
+      expect(friend2).toBe('Jamie');
+      expect(rest).toEqual(['Henry', 'Violet']);
+    });
+    it('has object destructuring', () => {
+      const starwars = {
+        title: 'Star Wars',
+        director: 'Lucas',
+        yearReleased: 1977,
+        cast: [{ name: 'Mark Hammil', role: 'Luke Skywalker' }],
+      };
+
+      // const title = starwars.title;
+      // const yearReleased = starwars.yearReleased;
+      const { title, yearReleased, director: directedBy } = starwars;
+
+      expect(title).toBe('Star Wars');
+      expect(directedBy).toBe('Lucas');
+      expect(yearReleased).toBe(1977);
+    });
+  });
 });

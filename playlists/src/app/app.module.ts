@@ -12,13 +12,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     AppComponent,
     ShoppingListComponent,
     NavigationComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
