@@ -1,6 +1,6 @@
 <app-create></app-create>
 
-<div *ngIf="model | async as model">
+<div *ngIf="model$ | async as model">
   <div class="card" *ngFor="let song of model.data">
     <div class="card-header">{{ song.title }}</div>
 
@@ -12,10 +12,14 @@
     </div>
 
     <div class="card-footer">
-      <button class="btn btn-sm btn-success">
+      <button (click)="addToPlaylist(song)" class="btn btn-sm btn-success">
         Add This Song to a Playlist
       </button>
-      <button *ngIf="!song.album" class="btn btn-sm btn-success">
+      <button
+        (click)="addAlbum(song)"
+        *ngIf="!song.album"
+        class="btn btn-sm btn-success"
+      >
         Add An Album for this song
       </button>
     </div>

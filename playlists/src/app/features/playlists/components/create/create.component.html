@@ -1,7 +1,9 @@
-<form [formGroup]="form" (ngSubmit)="addThisSong()">
+<form [formGroup]="form" (ngSubmit)="addThisSong(foci)">
   <div class="form-group">
     <label for="title">Title</label>
     <input
+      autofocus
+      #foci
       class="form-control"
       type="text"
       id="title"

@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { SongListModel } from '../../models';
-import { environment } from 'src/environments/environment';
+import { Component } from '@angular/core';
+import { SongListItem, SongListModel } from '../../models';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { SongEvents } from '../../state/songs.actions';
+import { selectSongListModel } from '../../state';
 
 @Component({
   selector: 'app-song-list',
@@ -10,9 +11,19 @@ import { Observable } from 'rxjs';
   styleUrls: ['./song-list.component.css'],
 })
 export class SongListComponent {
-  model: Observable<SongListModel>;
+  model$: Observable<SongListModel> = this.store.select(selectSongListModel);
 
-  constructor(private client: HttpClient) {
-    this.model = this.client.get<SongListModel>(environment.apiUrl + 'songs');
+  constructor(private store: Store) {}
+
+  addToPlaylist(item: SongListItem) {
+    this.store.dispatch(
+      SongEvents.addedtoplaylist({ payload: { id: item.id } })
+    );
+  }
+
+  addAlbum(item: SongListItem) {
+    this.store.dispatch(
+      SongEvents.titlechangerequested({ payload: { id: item.id } })
+    );
   }
 }

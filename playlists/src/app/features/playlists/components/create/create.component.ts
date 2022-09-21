@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { tap } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { SongListItem } from '../../models';
+import { Store } from '@ngrx/store';
+import { SongCreate } from '../../models';
+import { SongEvents } from '../../state/songs.actions';
 
 @Component({
   selector: 'app-create',
@@ -16,13 +15,17 @@ export class CreateComponent {
     artist: new FormControl<string>('', { nonNullable: true }),
     album: new FormControl<string>('', { nonNullable: true }),
   });
-  constructor(private client: HttpClient) {}
+  constructor(private store: Store) {}
 
-  addThisSong() {
-    this.client
-      .post<SongListItem>(environment.apiUrl + 'songs', this.form.value)
-      .pipe(tap((r) => console.log(r)))
-      .subscribe();
+  addThisSong(theInputThatShouldHaveTheFoccus: HTMLInputElement) {
+    const song: SongCreate = {
+      title: this.form.controls.title.value,
+      artist: this.form.controls.artist.value,
+      album: this.form.controls.album.value,
+    };
+    this.store.dispatch(SongEvents.added({ payload: song }));
+    this.form.reset();
+    theInputThatShouldHaveTheFoccus.focus();
   }
 }
 
