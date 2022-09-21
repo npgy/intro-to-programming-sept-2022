@@ -12,6 +12,8 @@ import { StoreModule } from '@ngrx/store';
 import { FEATURE_NAME, reducers } from './state';
 import { EffectsModule } from '@ngrx/effects';
 import { SongEffects } from './state/effects/song.effects';
+import { ListSorterComponent } from './components/list-sorter/list-sorter.component';
+import { SongSorterEffects } from './state/effects/song-sorter.effects';
 
 const routes: Routes = [
   {
@@ -40,6 +42,7 @@ const routes: Routes = [
     NavigationComponent,
     OverviewComponent,
     CreateComponent,
+    ListSorterComponent,
   ],
   imports: [
     CommonModule,
@@ -47,7 +50,7 @@ const routes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     StoreModule.forFeature(FEATURE_NAME, reducers),
-    EffectsModule.forFeature([SongEffects]),
+    EffectsModule.forFeature([SongEffects, SongSorterEffects]),
   ],
   exports: [RouterModule],
 })

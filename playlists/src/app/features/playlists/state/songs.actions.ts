@@ -7,7 +7,9 @@ export const SongEvents = createActionGroup({
   events: {
     added: props<{ payload: SongCreate }>(),
     addedToPlaylist: props<{ payload: { id: string } }>(),
-    titleChangeRequested: props<{ payload: { id: string } }>(),
+    titleChangeRequested: props<{
+      payload: { id: string; newTitle: string };
+    }>(),
     featureEntered: emptyProps(),
   },
 });
@@ -16,5 +18,6 @@ export const SongDocuments = createActionGroup({
   source: 'playlists song documents',
   events: {
     songs: props<{ payload: SongEntity[] }>(),
+    song: props<{ payload: SongEntity }>(),
   },
 });

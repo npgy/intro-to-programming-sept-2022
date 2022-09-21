@@ -23,7 +23,9 @@ export class SongListComponent {
 
   addAlbum(item: SongListItem) {
     this.store.dispatch(
-      SongEvents.titlechangerequested({ payload: { id: item.id } })
+      SongEvents.titlechangerequested({
+        payload: { id: item.id, newTitle: 'GREATEST HITS' },
+      })
     );
   }
 }
