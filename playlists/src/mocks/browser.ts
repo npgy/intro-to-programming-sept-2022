@@ -30,7 +30,11 @@ export const mocks = [
       ...request,
       id: (++lastId).toString() + 'FAKE',
     };
-    return res(ctx.status(201), ctx.json(response));
+    if (response.artist === 'toad the wet sprocket') {
+      return res(ctx.status(400));
+    } else {
+      return res(ctx.status(201), ctx.json(response));
+    }
   }),
 ];
 

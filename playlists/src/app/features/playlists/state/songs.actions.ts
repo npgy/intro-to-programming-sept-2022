@@ -11,6 +11,7 @@ export const SongEvents = createActionGroup({
       payload: { id: string; newTitle: string };
     }>(),
     featureEntered: emptyProps(),
+    error: props<{ payload: { message: string } }>(),
   },
 });
 

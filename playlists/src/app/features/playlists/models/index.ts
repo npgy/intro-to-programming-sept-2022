@@ -14,3 +14,9 @@ export interface SongCreate {
   artist: string;
   album?: string;
 }
+
+export interface SongSummaryModel {
+  numberOfSongs: number;
+  songsWithAlbums: number;
+  songsWithoutAlbums: number;
+}

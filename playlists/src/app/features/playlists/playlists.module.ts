@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { createComponent, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlaylistsComponent } from './playlists.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -14,6 +14,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { SongEffects } from './state/effects/song.effects';
 import { ListSorterComponent } from './components/list-sorter/list-sorter.component';
 import { SongSorterEffects } from './state/effects/song-sorter.effects';
+import { SongsSummaryComponent } from './components/songs-summary/songs-summary.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'songs',
         component: SongListComponent,
+      },
+      {
+        path: 'new-song',
+        component: CreateComponent,
       },
       {
         path: '**',
@@ -43,6 +48,7 @@ const routes: Routes = [
     OverviewComponent,
     CreateComponent,
     ListSorterComponent,
+    SongsSummaryComponent,
   ],
   imports: [
     CommonModule,

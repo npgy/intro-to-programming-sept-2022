@@ -3,7 +3,7 @@ import {
   createFeatureSelector,
   createSelector,
 } from '@ngrx/store';
-import { SongListModel } from '../models';
+import { SongListModel, SongSummaryModel } from '../models';
 import * as fromSongs from './reducers/songs.reducer';
 import * as fromSongSorter from './reducers/song-sorter.reducer';
 import { SongListSortOptions } from './song-sorter.actions';
@@ -60,4 +60,14 @@ export const selectSongListModel = createSelector(
       data,
     } as SongListModel;
   }
+);
+
+export const selectSongSummaryModel = createSelector(
+  selectSongListEntities,
+  (songs) =>
+    ({
+      numberOfSongs: songs.length,
+      songsWithAlbums: songs.filter((song) => song.album).length,
+      songsWithoutAlbums: songs.filter((songs) => !songs.album).length,
+    } as SongSummaryModel)
 );

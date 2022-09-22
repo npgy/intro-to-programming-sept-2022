@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from './state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
+import { ErrorDisplayComponent } from './components/error-display/error-display.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { EffectsModule } from '@ngrx/effects';
     ShoppingListComponent,
     NavigationComponent,
     DashboardComponent,
+    ErrorDisplayComponent,
   ],
   imports: [
     BrowserModule,
