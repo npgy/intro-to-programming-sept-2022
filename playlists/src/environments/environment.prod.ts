@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.songlists.com/',
+  apiUrl: 'http://api.playlists.com/web/v1/',
 };
