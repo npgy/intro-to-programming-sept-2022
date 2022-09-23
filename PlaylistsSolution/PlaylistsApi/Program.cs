@@ -10,6 +10,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(pol =>
+{
+    pol.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin();
+        builder.AllowAnyMethod();
+        builder.AllowAnyHeader();
+    });
+});
+
 builder.Services.AddScoped<IProvideTheSongCatalog, SongCatalog>();
 builder.Services.AddDbContext<PlaylistsDataContext>(options =>
 {
@@ -17,11 +27,18 @@ builder.Services.AddDbContext<PlaylistsDataContext>(options =>
 });
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dc = scope.ServiceProvider.GetRequiredService<PlaylistsDataContext>();
+    dc.Database.Migrate();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors();
 }
 
 app.UseAuthorization();

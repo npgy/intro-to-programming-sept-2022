@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlaylistsApi.Adapters;
 
@@ -11,9 +12,10 @@ using PlaylistsApi.Adapters;
 namespace PlaylistsApi.Migrations
 {
     [DbContext(typeof(PlaylistsDataContext))]
-    partial class PlaylistsDataContextModelSnapshot : ModelSnapshot
+    [Migration("20220923160424_ReadyForProd")]
+    partial class ReadyForProd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

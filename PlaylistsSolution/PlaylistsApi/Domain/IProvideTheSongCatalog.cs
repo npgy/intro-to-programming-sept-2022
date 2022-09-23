@@ -2,5 +2,6 @@
 
 public interface IProvideTheSongCatalog
 {
+    Task<SongSummaryItemResponse> AddSongAsync(SongCreateRequest request);
     Task<GetSongsResponse> GetAllSongsAsync();
 }
